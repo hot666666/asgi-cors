@@ -1,3 +1,5 @@
 dist/
 build/
 asgi_cors_strawberry.egg-info/
+venv/
+test.py

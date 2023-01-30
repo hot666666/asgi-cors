@@ -1,5 +1,6 @@
 import fnmatch
 
+'''
 ACCESS_CONTROL_ALLOW_ORIGIN = b"Access-Control-Allow-Origin"
 ACCESS_CONTROL_ALLOW_HEADERS = b"Access-Control-Allow-Headers"
 ACAO_ACAH = {ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_HEADERS}
@@ -8,6 +9,7 @@ allow_all = True
 hosts = []
 host_wildcards = []
 access_control_allow_headers = [b"content-type"]  # , b"authorization"]
+'''
 
 
 def cors_options(allow_all=True, hosts=[], host_wildcards=[], headers=["content-type", "authorization"]):
@@ -27,6 +29,16 @@ class CorsMiddleware:
 
     async def __call__(self, scope, receive, send):
         async def _base_send(event):
+            ################################################
+            ACCESS_CONTROL_ALLOW_ORIGIN = b"Access-Control-Allow-Origin"
+            ACCESS_CONTROL_ALLOW_HEADERS = b"Access-Control-Allow-Headers"
+            ACAO_ACAH = {ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_ALLOW_HEADERS}
+            allow_all = True
+            hosts = []
+            host_wildcards = []
+            access_control_allow_headers = [b"content-type"]
+            ################################################
+
             if event["type"] == "http.response.start":
                 original_headers = event.get("headers") or []  # send_headers
                 access_control_allow_origin = None
