@@ -1,5 +1,8 @@
 # asgi-cors-strawberry
 
+[![PyPI](https://img.shields.io/pypi/v/asgi-cors-strawberry.svg)](https://pypi.org/project/asgi-cors-strawberry/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/hot666666/asgi-cors-strawberry/blob/main/LICENSE)
+
 ASGI middleware to apply CORS header especially for Strawberry GraphQL
 
 ## installation
@@ -15,9 +18,9 @@ The response from preflight has Access-Control-Allow-Origin, Access-Control-Allo
 
 Since [Strawberry GraphQL Consumer](https://strawberry.rocks/docs/integrations/channels#creating-the-consumers) is designed to handle only GET and POST methods, if you use general ASGI CORS middleware, you will get a 405 code as a response to preflight.
 
-- This middleware responds with Okay status in case of OPTIONS method
-- This middleware checks Access-Control-Allow-Origin from hosts, wild*cards setting \_all hosts are allowed by default!*
-- This middleware add Content-Type in Access-Control-Allow-Headers, because gql will be passed to the request
+- Our middleware responds with Okay status in case of OPTIONS method
+- Our middleware checks Access-Control-Allow-Origin from hosts, wildcards setting, _All hosts are allowed by default!_
+- Our middleware adds Content-Type in Access-Control-Allow-Headers, because gql will be passed to the request
 
 Additional settings are not yet supported.
 It will be sorted out and updated soon.
