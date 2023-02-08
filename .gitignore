@@ -4,3 +4,5 @@ asgi_cors_strawberry.egg-info/
 venv/
 test.py
 .DS_Store
+.idea/
+__pycache__/

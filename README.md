@@ -13,25 +13,26 @@ ASGI middleware to apply CORS header especially for Strawberry GraphQL
 
 ## when to use
 
-According to mdn [MDN - CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), cross-origin requests are preflighted using OPTIONS method.
+According to mdn [MDN - CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), cross-origin requests are
+preflighted using OPTIONS method.
 The response from preflight has Access-Control-Allow-Origin, Access-Control-Allow-Headers, etc.
 
-Since [Strawberry GraphQL Consumer](https://strawberry.rocks/docs/integrations/channels#creating-the-consumers) is designed to handle only GET and POST methods, if you use general ASGI CORS middleware, you will get a 405 code as a response to preflight.
+Since [Strawberry GraphQL Consumer](https://strawberry.rocks/docs/integrations/channels#creating-the-consumers) is
+designed to handle only GET and POST methods, if you use general ASGI CORS middleware, you will get a 405 code as a
+response to preflight.
 
 - Our middleware responds with Okay status in case of OPTIONS method
 - Our middleware checks Access-Control-Allow-Origin from hosts, wildcards setting, _All hosts are allowed by default!_
 - Our middleware adds Content-Type in Access-Control-Allow-Headers, because gql will be passed to the request
 
-Additional settings are not yet supported.
-It will be sorted out and updated soon.
-
 ## how to use
 
 ```python
-# asgi.py
+# in django asgi.py
 
 
 from asgi_cors_strawberry import CorsMiddleware
+
 ...
 
 application = ProtocolTypeRouter(
@@ -49,14 +50,35 @@ application = ProtocolTypeRouter(
     }
 )
 
-
 application = CorsMiddleware(application)
 
 ```
 
-The example above is an ASGI application using [Strawberry-GraphQL[Channels]](https://strawberry.rocks/docs/integrations/channels)
+The example above is an ASGI application
+using [Strawberry-GraphQL[Channels]](https://strawberry.rocks/docs/integrations/channels)
 
-## left to do
+## CorsMiddleware parameters
 
-- [ ] initialize - allow_all, hosts, host_wildcards, access_control_allow_headers
+- CorsMiddleware(application, allow_all=True, hosts=[ ], host_wildcards=[ ], headers=["content-type", "authorization"])
+
+### allow_all
+
+True if all hosts are allowed
+
+### hosts
+
+if allow_all is False, hosts is a list of allowed hosts
+
+### host_wildcards
+
+you can use wildcards in hosts, like ["*.example.com"]
+
+### headers
+
+you can add headers to Access-Control-Allow-Headers
+
+default header is "content-type" because gql will be passed to the request
+
+## TODO
+
 - [ ] testcase
